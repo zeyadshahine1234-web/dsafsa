@@ -11,38 +11,38 @@
     }
 
     :root {
-      --green: #0aa000;
+      --green: #08a100;
       --green-dark: #078700;
-      --orange: #f5a300;
-      --orange-dark: #de9200;
-      --bg: #ececec;
-      --surface-top: #f3f3f3;
-      --surface-bottom: #e8e8e8;
-      --ink: #111111;
-      --purple: #8f189c;
+      --orange: #f4a300;
+      --orange-dark: #df9200;
 
-      --frame-band: 28px;
-      --side-band: 28px;
+      --bg: #ececec;
+      --surface: #ededed;
+      --surface-2: #e7e7e7;
+
+      --ink: #121212;
+      --purple: #9221a4;
 
       --hex-w: 118px;
       --hex-h: 104px;
       --hex-border: 4px;
-      --row-lift: -24px;
-      --row-shift: 57px;
-      --hex-overlap: -7px;
+
+      --row-overlap: 24px;
+      --board-offset: calc(var(--hex-w) / 2);
+      --board-width: calc(var(--hex-w) * 5 + var(--board-offset));
     }
 
     body {
       margin: 0;
       min-height: 100vh;
-      background:
-        radial-gradient(circle at top, rgba(255,255,255,0.55), transparent 35%),
-        linear-gradient(180deg, #eeeeee 0%, #e6e6e6 100%);
       font-family: "Tahoma", "Arial", sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.45), transparent 32%),
+        linear-gradient(180deg, #efefef 0%, #e6e6e6 100%);
       display: flex;
-      justify-content: center;
       align-items: center;
-      padding: 28px;
+      justify-content: center;
+      padding: 24px;
       color: #222;
     }
 
@@ -65,22 +65,21 @@
       border-radius: 20px;
       background: rgba(255, 255, 255, 0.92);
       box-shadow:
-        0 10px 24px rgba(0, 0, 0, 0.09),
-        inset 0 1px 0 rgba(255,255,255,0.8);
+        0 10px 24px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255,255,255,0.9);
       border: 1px solid rgba(0, 0, 0, 0.05);
-      backdrop-filter: blur(4px);
     }
 
     .logo-mark {
       width: 22px;
       height: 22px;
       border-radius: 7px;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
       background:
         linear-gradient(to bottom, var(--green) 0 50%, var(--orange) 50% 100%);
-      position: relative;
-      overflow: hidden;
       box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
-      flex-shrink: 0;
     }
 
     .logo-mark::before,
@@ -97,54 +96,53 @@
     .logo-mark::after { left: 0; }
 
     .logo-text {
-      font-size: 31px;
+      font-size: 30px;
       font-weight: 800;
       line-height: 1;
-      color: #222;
-      letter-spacing: 0.2px;
+      color: #262626;
     }
 
     .frame {
       position: relative;
       display: inline-block;
-      padding: 26px 30px;
-      border-radius: 42px;
       overflow: hidden;
+      border-radius: 42px;
+      padding: 26px 28px;
       background:
-        linear-gradient(var(--green), var(--green)) top / 100% var(--frame-band) no-repeat,
-        linear-gradient(var(--green), var(--green)) bottom / 100% var(--frame-band) no-repeat,
-        linear-gradient(var(--orange), var(--orange)) left / var(--side-band) 100% no-repeat,
-        linear-gradient(var(--orange), var(--orange)) right / var(--side-band) 100% no-repeat,
-        linear-gradient(180deg, var(--surface-top) 0%, var(--surface-bottom) 100%);
+        linear-gradient(var(--green), var(--green)) top / 100% 30px no-repeat,
+        linear-gradient(var(--green), var(--green)) bottom / 100% 30px no-repeat,
+        linear-gradient(var(--orange), var(--orange)) left / 28px 100% no-repeat,
+        linear-gradient(var(--orange), var(--orange)) right / 28px 100% no-repeat,
+        linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
       box-shadow:
-        0 18px 38px rgba(0, 0, 0, 0.16),
-        inset 0 1px 0 rgba(255,255,255,0.35);
+        0 18px 40px rgba(0, 0, 0, 0.14),
+        inset 0 1px 0 rgba(255,255,255,0.45);
     }
 
     .frame::before {
       content: "";
       position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background:
-        radial-gradient(circle at 12% 10%, rgba(255,255,255,0.26), transparent 20%),
-        radial-gradient(circle at 88% 88%, rgba(255,255,255,0.16), transparent 18%);
+      inset: 10px;
+      border-radius: 30px;
+      border: 1px solid rgba(0,0,0,0.05);
       pointer-events: none;
     }
 
     .frame::after {
       content: "";
       position: absolute;
-      inset: 14px;
-      border-radius: 30px;
-      border: 1px solid rgba(0, 0, 0, 0.05);
+      inset: 0;
+      border-radius: inherit;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(255,255,255,0.20), transparent 18%),
+        radial-gradient(circle at 88% 88%, rgba(255,255,255,0.12), transparent 20%);
       pointer-events: none;
     }
 
     .inner {
       position: relative;
-      border-radius: 30px;
-      padding: 28px 34px 34px;
+      padding: 26px 28px 30px;
+      border-radius: 28px;
       background: transparent;
     }
 
@@ -152,100 +150,63 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: fit-content;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    .board-wrap::before {
-      content: "";
-      position: absolute;
-      inset: 18px 10px;
-      border-radius: 28px;
-      background:
-        radial-gradient(circle at center, rgba(255,255,255,0.45), rgba(255,255,255,0) 70%);
-      pointer-events: none;
-      filter: blur(12px);
+      width: 100%;
     }
 
     .board {
+      width: var(--board-width);
       direction: ltr;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: fit-content;
-      padding: 8px 6px;
       position: relative;
-      z-index: 1;
+      margin: 0 auto;
+      padding: 6px 0;
+    }
+
+    .board::before {
+      content: "";
+      position: absolute;
+      inset: 40px 20px;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.28), transparent 68%);
+      filter: blur(10px);
+      pointer-events: none;
     }
 
     .row {
       display: flex;
-      justify-content: center;
-      margin-top: var(--row-lift);
+      width: calc(var(--hex-w) * 5);
       position: relative;
     }
 
-    .row:first-child {
-      margin-top: 0;
+    .row + .row {
+      margin-top: calc(var(--row-overlap) * -1);
     }
 
     .row.offset {
-      transform: translateX(var(--row-shift));
+      margin-left: var(--board-offset);
     }
 
     .hex {
+      --fill: #fcfcfc;
+      --text: var(--purple);
+
       position: relative;
+      flex: 0 0 var(--hex-w);
       width: var(--hex-w);
       height: var(--hex-h);
-      margin-left: var(--hex-overlap);
-      clip-path: polygon(
-        50% 0%,
-        100% 25%,
-        100% 75%,
-        50% 100%,
-        0% 75%,
-        0% 25%
-      );
-      background: var(--ink);
-      display: flex;
-      justify-content: center;
-      align-items: center;
       cursor: pointer;
       user-select: none;
+      -webkit-tap-highlight-color: transparent;
       transition:
-        transform 0.18s ease,
         filter 0.18s ease,
-        box-shadow 0.18s ease;
-      z-index: 1;
-      box-shadow: 0 8px 14px rgba(0, 0, 0, 0.12);
+        transform 0.12s ease;
     }
 
-    .hex:first-child {
-      margin-left: 0;
-    }
-
-    .hex::before {
-      content: "";
-      position: absolute;
-      inset: var(--hex-border);
-      clip-path: polygon(
-        50% 0%,
-        100% 25%,
-        100% 75%,
-        50% 100%,
-        0% 75%,
-        0% 25%
-      );
-      background: #f9f9f9;
-      z-index: 0;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.6);
-    }
-
+    .hex::before,
     .hex::after {
       content: "";
       position: absolute;
-      inset: calc(var(--hex-border) + 2px);
+      inset: 0;
       clip-path: polygon(
         50% 0%,
         100% 25%,
@@ -254,57 +215,62 @@
         0% 75%,
         0% 25%
       );
-      background: linear-gradient(180deg, rgba(255,255,255,0.18), transparent 35%);
-      z-index: 0;
-      pointer-events: none;
+    }
+
+    .hex::before {
+      background: var(--ink);
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.08));
+    }
+
+    .hex::after {
+      inset: var(--hex-border);
+      background: var(--fill);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55);
     }
 
     .hex span {
-      position: relative;
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       z-index: 1;
       font-size: 28px;
       font-weight: 800;
-      color: var(--purple);
+      color: var(--text);
       line-height: 1;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+      text-shadow: 0 1px 0 rgba(255,255,255,0.28);
     }
 
-    .hex:hover {
-      transform: translateY(-3px) scale(1.02);
-      filter: brightness(0.99);
-      z-index: 3;
-      box-shadow: 0 12px 18px rgba(0, 0, 0, 0.16);
+    .hex.white {
+      --fill: #fcfcfc;
+      --text: var(--purple);
     }
 
-    .hex.white::before {
-      background: #fcfcfc;
+    .hex.yellow {
+      --fill: #f2c230;
+      --text: #1a1a1a;
     }
 
-    .hex.yellow::before {
-      background: #f2c230;
+    .hex.green {
+      --fill: #42ab68;
+      --text: #ffffff;
     }
 
-    .hex.yellow span {
-      color: #1d1d1d;
-      text-shadow: none;
+    .hex.orange {
+      --fill: #f5a300;
+      --text: #ffffff;
     }
 
-    .hex.green::before {
-      background: #42ab68;
+    @media (hover: hover) and (pointer: fine) {
+      .hex:hover {
+        filter: brightness(1.01);
+        transform: translateY(-2px);
+      }
     }
 
-    .hex.green span {
-      color: #ffffff;
-      text-shadow: none;
-    }
-
-    .hex.orange::before {
-      background: #f5a300;
-    }
-
-    .hex.orange span {
-      color: #ffffff;
-      text-shadow: none;
+    .hex:active {
+      transform: scale(0.985);
     }
 
     @media (max-width: 1100px) {
@@ -312,11 +278,7 @@
         --hex-w: 98px;
         --hex-h: 86px;
         --hex-border: 3.5px;
-        --row-lift: -20px;
-        --row-shift: 48px;
-        --hex-overlap: -6px;
-        --frame-band: 24px;
-        --side-band: 24px;
+        --row-overlap: 20px;
       }
 
       .logo-text {
@@ -324,11 +286,11 @@
       }
 
       .frame {
-        padding: 22px 24px;
+        padding: 22px 22px;
       }
 
       .inner {
-        padding: 24px 24px 28px;
+        padding: 22px 20px 24px;
       }
 
       .hex span {
@@ -341,11 +303,7 @@
         --hex-w: 74px;
         --hex-h: 65px;
         --hex-border: 3px;
-        --row-lift: -15px;
-        --row-shift: 36px;
-        --hex-overlap: -5px;
-        --frame-band: 18px;
-        --side-band: 18px;
+        --row-overlap: 15px;
       }
 
       body {
@@ -362,18 +320,23 @@
       }
 
       .frame {
-        padding: 14px 14px 16px;
         border-radius: 28px;
+        padding: 14px;
+        background:
+          linear-gradient(var(--green), var(--green)) top / 100% 18px no-repeat,
+          linear-gradient(var(--green), var(--green)) bottom / 100% 18px no-repeat,
+          linear-gradient(var(--orange), var(--orange)) left / 18px 100% no-repeat,
+          linear-gradient(var(--orange), var(--orange)) right / 18px 100% no-repeat,
+          linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
       }
 
-      .frame::after {
-        inset: 9px;
-        border-radius: 20px;
+      .frame::before {
+        inset: 8px;
+        border-radius: 18px;
       }
 
       .inner {
-        border-radius: 18px;
-        padding: 16px 14px 20px;
+        padding: 14px 12px 18px;
       }
 
       .hex span {
@@ -438,7 +401,8 @@
       row.className = rowIndex % 2 === 1 ? "row offset" : "row";
 
       rowLetters.forEach(letter => {
-        const hex = document.createElement("div");
+        const hex = document.createElement("button");
+        hex.type = "button";
         hex.className = "hex white";
 
         const text = document.createElement("span");
