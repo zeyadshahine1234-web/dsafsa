@@ -16,21 +16,28 @@
       --orange: #f5a300;
       --orange-dark: #de9200;
       --bg: #ececec;
-      --panel: #f7f7f7;
+      --surface-top: #f3f3f3;
+      --surface-bottom: #e8e8e8;
       --ink: #111111;
       --purple: #8f189c;
+
+      --frame-band: 28px;
+      --side-band: 28px;
 
       --hex-w: 118px;
       --hex-h: 104px;
       --hex-border: 4px;
       --row-lift: -24px;
-      --row-shift: 60px;
+      --row-shift: 57px;
+      --hex-overlap: -7px;
     }
 
     body {
       margin: 0;
       min-height: 100vh;
-      background: var(--bg);
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.55), transparent 35%),
+        linear-gradient(180deg, #eeeeee 0%, #e6e6e6 100%);
       font-family: "Tahoma", "Arial", sans-serif;
       display: flex;
       justify-content: center;
@@ -55,21 +62,25 @@
       align-items: center;
       gap: 12px;
       padding: 12px 18px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.88);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow:
+        0 10px 24px rgba(0, 0, 0, 0.09),
+        inset 0 1px 0 rgba(255,255,255,0.8);
       border: 1px solid rgba(0, 0, 0, 0.05);
       backdrop-filter: blur(4px);
     }
 
     .logo-mark {
-      width: 20px;
-      height: 20px;
-      border-radius: 6px;
+      width: 22px;
+      height: 22px;
+      border-radius: 7px;
       background:
         linear-gradient(to bottom, var(--green) 0 50%, var(--orange) 50% 100%);
       position: relative;
       overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+      flex-shrink: 0;
     }
 
     .logo-mark::before,
@@ -86,49 +97,55 @@
     .logo-mark::after { left: 0; }
 
     .logo-text {
-      font-size: 30px;
+      font-size: 31px;
       font-weight: 800;
       line-height: 1;
-      color: #2a2a2a;
+      color: #222;
+      letter-spacing: 0.2px;
     }
 
     .frame {
       position: relative;
       display: inline-block;
-      padding: 34px;
+      padding: 26px 30px;
       border-radius: 42px;
+      overflow: hidden;
       background:
-        linear-gradient(to right,
-          var(--orange) 0%,
-          var(--orange) 10%,
-          var(--green) 10%,
-          var(--green) 90%,
-          var(--orange) 90%,
-          var(--orange) 100%);
-      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
+        linear-gradient(var(--green), var(--green)) top / 100% var(--frame-band) no-repeat,
+        linear-gradient(var(--green), var(--green)) bottom / 100% var(--frame-band) no-repeat,
+        linear-gradient(var(--orange), var(--orange)) left / var(--side-band) 100% no-repeat,
+        linear-gradient(var(--orange), var(--orange)) right / var(--side-band) 100% no-repeat,
+        linear-gradient(180deg, var(--surface-top) 0%, var(--surface-bottom) 100%);
+      box-shadow:
+        0 18px 38px rgba(0, 0, 0, 0.16),
+        inset 0 1px 0 rgba(255,255,255,0.35);
     }
 
     .frame::before {
       content: "";
       position: absolute;
       inset: 0;
-      border-radius: 42px;
+      border-radius: inherit;
       background:
-        linear-gradient(to bottom,
-          var(--green) 0 26px,
-          transparent 26px calc(100% - 26px),
-          var(--green) calc(100% - 26px) 100%);
+        radial-gradient(circle at 12% 10%, rgba(255,255,255,0.26), transparent 20%),
+        radial-gradient(circle at 88% 88%, rgba(255,255,255,0.16), transparent 18%);
+      pointer-events: none;
+    }
+
+    .frame::after {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border-radius: 30px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
       pointer-events: none;
     }
 
     .inner {
       position: relative;
-      background: var(--panel);
-      border-radius: 34px;
-      padding: 34px 46px 42px;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.9),
-        0 6px 16px rgba(0,0,0,0.05);
+      border-radius: 30px;
+      padding: 28px 34px 34px;
+      background: transparent;
     }
 
     .board-wrap {
@@ -137,6 +154,18 @@
       align-items: center;
       width: fit-content;
       margin: 0 auto;
+      position: relative;
+    }
+
+    .board-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 18px 10px;
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.45), rgba(255,255,255,0) 70%);
+      pointer-events: none;
+      filter: blur(12px);
     }
 
     .board {
@@ -145,13 +174,16 @@
       flex-direction: column;
       align-items: center;
       width: fit-content;
-      padding: 6px;
+      padding: 8px 6px;
+      position: relative;
+      z-index: 1;
     }
 
     .row {
       display: flex;
       justify-content: center;
       margin-top: var(--row-lift);
+      position: relative;
     }
 
     .row:first-child {
@@ -166,7 +198,7 @@
       position: relative;
       width: var(--hex-w);
       height: var(--hex-h);
-      margin-left: -6px;
+      margin-left: var(--hex-overlap);
       clip-path: polygon(
         50% 0%,
         100% 25%,
@@ -181,8 +213,12 @@
       align-items: center;
       cursor: pointer;
       user-select: none;
-      transition: transform 0.15s ease, filter 0.15s ease;
+      transition:
+        transform 0.18s ease,
+        filter 0.18s ease,
+        box-shadow 0.18s ease;
       z-index: 1;
+      box-shadow: 0 8px 14px rgba(0, 0, 0, 0.12);
     }
 
     .hex:first-child {
@@ -201,23 +237,43 @@
         0% 75%,
         0% 25%
       );
-      background: #fcfcfc;
+      background: #f9f9f9;
       z-index: 0;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.6);
+    }
+
+    .hex::after {
+      content: "";
+      position: absolute;
+      inset: calc(var(--hex-border) + 2px);
+      clip-path: polygon(
+        50% 0%,
+        100% 25%,
+        100% 75%,
+        50% 100%,
+        0% 75%,
+        0% 25%
+      );
+      background: linear-gradient(180deg, rgba(255,255,255,0.18), transparent 35%);
+      z-index: 0;
+      pointer-events: none;
     }
 
     .hex span {
       position: relative;
       z-index: 1;
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 800;
       color: var(--purple);
       line-height: 1;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.35);
     }
 
     .hex:hover {
-      transform: translateY(-2px);
-      filter: brightness(0.98);
+      transform: translateY(-3px) scale(1.02);
+      filter: brightness(0.99);
       z-index: 3;
+      box-shadow: 0 12px 18px rgba(0, 0, 0, 0.16);
     }
 
     .hex.white::before {
@@ -229,7 +285,8 @@
     }
 
     .hex.yellow span {
-      color: #1c1c1c;
+      color: #1d1d1d;
+      text-shadow: none;
     }
 
     .hex.green::before {
@@ -238,6 +295,7 @@
 
     .hex.green span {
       color: #ffffff;
+      text-shadow: none;
     }
 
     .hex.orange::before {
@@ -246,6 +304,7 @@
 
     .hex.orange span {
       color: #ffffff;
+      text-shadow: none;
     }
 
     @media (max-width: 1100px) {
@@ -254,7 +313,10 @@
         --hex-h: 86px;
         --hex-border: 3.5px;
         --row-lift: -20px;
-        --row-shift: 50px;
+        --row-shift: 48px;
+        --hex-overlap: -6px;
+        --frame-band: 24px;
+        --side-band: 24px;
       }
 
       .logo-text {
@@ -262,15 +324,15 @@
       }
 
       .frame {
-        padding: 24px;
+        padding: 22px 24px;
       }
 
       .inner {
-        padding: 26px 30px 32px;
+        padding: 24px 24px 28px;
       }
 
       .hex span {
-        font-size: 22px;
+        font-size: 23px;
       }
     }
 
@@ -280,7 +342,10 @@
         --hex-h: 65px;
         --hex-border: 3px;
         --row-lift: -15px;
-        --row-shift: 38px;
+        --row-shift: 36px;
+        --hex-overlap: -5px;
+        --frame-band: 18px;
+        --side-band: 18px;
       }
 
       body {
@@ -289,6 +354,7 @@
 
       .logo {
         padding: 10px 14px;
+        border-radius: 16px;
       }
 
       .logo-text {
@@ -296,17 +362,18 @@
       }
 
       .frame {
-        padding: 16px;
-        border-radius: 26px;
+        padding: 14px 14px 16px;
+        border-radius: 28px;
       }
 
-      .frame::before {
-        border-radius: 26px;
+      .frame::after {
+        inset: 9px;
+        border-radius: 20px;
       }
 
       .inner {
-        border-radius: 20px;
-        padding: 18px 18px 22px;
+        border-radius: 18px;
+        padding: 16px 14px 20px;
       }
 
       .hex span {
@@ -337,7 +404,7 @@
   <script>
     const letters = [
       "م","ا","ق","س","هـ",
-      "ة","ط","ع","و","ل",
+      "ك","ط","ع","و","ل",
       "ف","ن","ص","د","ي",
       "ر","ب","ت","ث","ج",
       "ح","خ","ذ","ز","ش"
